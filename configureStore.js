@@ -1,13 +1,12 @@
 import { createStore, applyMiddleware } from 'redux'
-import createSagaMiddleware from 'redux-saga'
+import { createEpicMiddleware } from 'redux-observable'
 
 import app from './reducers'
-import heroSaga from './saga'
+import fetchHeroEpic from './epic'
 
-const sagaMiddleware = createSagaMiddleware()
+const epicMiddleware = createEpicMiddleware(fetchHeroEpic)
 
 export default function configureStore () {
-  let store = createStore(app, applyMiddleware(sagaMiddleware))
-  sagaMiddleware.run(heroSaga)
+  let store = createStore(app, applyMiddleware(epicMiddleware))
   return store
 }
