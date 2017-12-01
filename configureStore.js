@@ -1,7 +1,8 @@
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 import app from './reducers'
 
-export default function configureStore() {
-  let store = createStore(app)
+export default function configureStore () {
+  let store = createStore(app, applyMiddleware(thunk))  // pass `applyMiddleware` as second param
   return store
 }

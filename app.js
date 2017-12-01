@@ -16,15 +16,37 @@ const App = (props) => {
     container,
     title,
     button,
-    buttonText
+    buttonText,
+    mainContent
   } = styles
 
   return (
     <View style={container}>
       <Text style={title}>Redux Async Playground</Text>
-      <TouchableHighlight style={button}>
+      <TouchableHighlight
+        style={button}
+        onPress={() => props.fetchData()}>
         <Text style={buttonText}>Load Super Heroes</Text>
       </TouchableHighlight>
+      <View style={mainContent}>
+        {
+          props.appData.isFetching
+          &&
+          <Text>Loading...</Text>
+        }
+        {
+          props.appData.data.length
+          ? (
+            props.appData.data.map((hero, i) =>
+              <View key={i}>
+                <Text>Name: {hero.name}</Text>
+                <Text>Age: {hero.age}</Text>
+              </View>
+            )
+          )
+          : null
+        }
+      </View>
     </View>
   )
 }
@@ -47,6 +69,9 @@ styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff'
+  },
+  mainContent: {
+    margin: 20
   }
 })
 
